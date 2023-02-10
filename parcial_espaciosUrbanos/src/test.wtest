@@ -1,0 +1,140 @@
+import example.*
+
+describe "Punto 1: Espacios Urbanos"{
+	
+	test "una plaza es un esp urbano grande tiene una sup > 50 y mas de 2 canchass"{
+	
+	const plazaGrande = new Plaza(superficie = 51, canchas = 3)
+	
+	assert.that(plazaGrande.esGrande())
+	
+	}
+	
+	test "una plazoleta es un esp urbano grande si el proces es San Martin y se cierra de noche"{
+	
+	const plazoletaGrande = new Plazoleta(rindeHomenajeA = "San Martin", tieneVallado = true)
+	assert.that(plazoletaGrande.esGrande())
+	}
+	
+	test "un multiEspacio es grande si sus espacios urbanos son grandes"{
+		
+	const plazaGrande = new Plaza(superficie = 51, canchas = 3)
+	const plazoletaGrande = new Plazoleta(rindeHomenajeA = "San Martin", tieneVallado = true)	
+	
+	const multiespacio = new Multiespacio(espacios = #{plazoletaGrande,plazaGrande})
+	
+	assert.that(multiespacio.esGrande())
+	
+	
+	}
+	
+}
+
+describe "Punto 2 y 3: Trabajadores"{
+	
+	test "Los cerrajeros pueden trabajar con cualq espacio urbano que  no tenga vallado"{
+	
+	
+	const unCerrajero = new Trabajador(profesion = cerrajero)	
+	
+	const plazaGrande = new Plaza(superficie = 51, canchas = 3 , tieneVallado = false)
+	
+	assert.that(unCerrajero.puedeRealizarTarea(plazaGrande))
+	
+	}
+	
+	test "El espacio urbano luego de ser trabajado queda vallado"{
+	
+	const unCerrajero = new Trabajador(profesion = cerrajero)	
+	
+	const plazaGrande = new Plaza(superficie = 51, canchas = 3 , tieneVallado = false)
+	
+	unCerrajero.realizarTrabajo(plazaGrande)
+	assert.that(plazaGrande.tieneVallado())
+	
+	}
+	
+	test "El valor de la hora de un trabajador"{
+	
+	salarioDelTrabajador.cambiar(100)
+	
+	const unCerrajero = new Trabajador(profesion = cerrajero)	
+	
+	const plazaGrande = new Plaza(superficie = 51, canchas = 3 , tieneVallado = false)
+	
+	unCerrajero.realizarTrabajo(plazaGrande)
+	
+	assert.equals(unCerrajero.manoDeObra(plazaGrande),500) //en espacio grande demora 5 horas la tarea
+	
+	}
+	
+	test "Costo del trabajo realizado por un jardinero"{
+	
+	salarioDelTrabajador.cambiar(100)
+	
+	const unJardinero = new Trabajador(profesion = jardinero)	
+	
+	const plazaSinCancha = new Plaza(valor = 1000 , superficie = 100, canchas = 0 , tieneVallado = false)
+	
+//	const multiEspacioGrande = new Multiespacio(espacios = #{plazaSinCancha,plazaSinCancha,plazaSinCancha,plazaSinCancha})
+	
+//	assert.that(unJardinero .puedeRealizarTarea(plazaSinCancha))
+	
+	unJardinero .realizarTrabajo(plazaSinCancha)
+	
+	assert.equals(plazaSinCancha.valor(), 1100)
+	
+	assert.equals(unJardinero.duracionDelTrabajo(plazaSinCancha),10)
+	
+	assert.equals(unJardinero.manoDeObra(plazaSinCancha),2500) //en espacio grande demora 5 horas la tarea
+	
+	}
+	
+	test "Registro del trabajo realizado"{
+	
+	salarioDelTrabajador.cambiar(100)
+	
+	const unJardinero = new Trabajador(profesion = jardinero)	
+	
+	const plazaSinCancha = new Plaza(valor = 1000 , superficie = 100, canchas = 0 , tieneVallado = false)
+	
+//	const multiEspacioGrande = new Multiespacio(espacios = #{plazaSinCancha,plazaSinCancha,plazaSinCancha,plazaSinCancha})
+	
+//	assert.that(unJardinero .puedeRealizarTarea(plazaSinCancha))
+	
+	unJardinero .realizarTrabajo(plazaSinCancha)
+	
+	assert.equals(plazaSinCancha.valor(), 1100)
+	
+	assert.equals(unJardinero.duracionDelTrabajo(plazaSinCancha),10)
+	
+	assert.equals(unJardinero.manoDeObra(plazaSinCancha),2500) //en espacio grande demora 5 horas la tarea
+	
+	assert.equals(unJardinero.trabajosRealizados(),#{plazaSinCancha,2/9/2023,10,2500})
+	}	
+		
+	
+}
+
+describe "Punto 4: Trabajos heavys"{
+	
+	
+	test "Registro del trabajo realizado"{
+		
+	salarioDelTrabajador.cambiar(10000)
+	
+	const unCerrajero = new Trabajador(profesion = cerrajero,costo = 0)	
+	
+	const plazaGrande= new Plaza(valor = 1000 , superficie = 100, canchas = 3 , tieneVallado = false, trabajadorACargo = unCerrajero)
+		
+	unCerrajero.realizarTrabajo(plazaGrande)
+		
+	assert.equals(unCerrajero.duracionDelTrabajo(plazaGrande),5)
+	
+	assert.equals(unCerrajero.manoDeObra(plazaGrande),12500)
+	
+	assert.that(plazaGrande.esHeavy())
+	
+
+	}	
+}
